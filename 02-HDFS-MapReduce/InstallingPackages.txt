@@ -1,0 +1,35 @@
+# Getting to root and change the password
+su root
+
+# When you first logged in, the password is hadoop
+
+# 
+yum-config-manager --save --setopt=HDP-SOLR-2.6-100.skip_if_unavailable=true
+
+#
+yum install https://repo.ius.io/ius-release-el7.rpm https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+# Installing pip
+yum install python-pip
+pip install pathlib
+
+# Installing mrjob for python
+pip install mrjob==0.7.4
+pip install PyYAML==5.4.1
+
+# Installing nano text editor
+yum install nano
+
+# Downloading the ml-100k u.data for our MapReduce Job
+wget http://media.sundog-soft.com/hadoop/ml-100k/u.data
+
+# Downloading the python script for MapReduce Job
+wget http://media.sundog-soft.com/hadoop/RatingsBreakdown.py
+
+# Run locally with mrjob
+python RatingsBreakdown.py u.data
+
+# Run with Hadoop
+python RatingsBreakdown.py -r hadoop --hadoop-streaming-jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar u.data
+
+
